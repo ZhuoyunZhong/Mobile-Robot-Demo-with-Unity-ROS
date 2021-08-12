@@ -5,3 +5,6 @@ UserSettings/
 Temp/
 obj/
 .vscode/
+
+*.sln
+*.csproj
