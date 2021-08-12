@@ -34,6 +34,6 @@ Now that we have the colliders properly set up, we will need to initialize and m
 
 ![image](demo/plugin1.jpg)
 
-- Finally, we can now run the Unity, and try to control the robot with your keyboard.
+- Finally, we can now run the Unity, and try to control the robot with your keyboard. Also, by now, you will have the same setup as scene **RobotImported**.
 
 ![image](demo/navigating.gif)
