@@ -10,6 +10,8 @@ Before running this package, it is highly recommended to try the [Unity Robotics
 
 ---
 
+Open Unity Hub and click "Add" button. Select 
+
 Create a new Unity 3D project and name it **Gopher In Unity Simulation**. 
 
 Change the physics and color settings. Open `Edit` -> `Project Settings` 
@@ -21,10 +23,18 @@ The next step is to install ROS-Unity connection package. Open `Window` -> `Pack
 - To install [ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector), enter `https://github.com/Unity-Technologies/ROS-TCP-Connector.git?path=/com.unity.robotics.ros-tcp-connector` and add it.
 - To install [URDF-Importer](https://github.com/Unity-Technologies/URDF-Importer), enter `https://github.com/Unity-Technologies/URDF-Importer.git?path=/com.unity.robotics.urdf-importer` and add it.
 
-If you would like to edit or create a new building, you could also install `ProbBuilder` and `ProGrids` package. 
+If you would like to edit or create a new navigation or building environment, you could also install `ProbBuilder` and `ProGrids` package. 
+
+## Unity Setup
+
+This
+
+## ROS Setup
+
+This
+
+## Running Mobile Robot
 
 
 
-Now you could `git clone` and download this repository, then cut and paste to the folder where it stores your Unity projects, to merge with your **Gopher In Unity Simulation** folder. Switch back to Unity, and now it should load all the necessary files.
-
-## 
+## TODO List
