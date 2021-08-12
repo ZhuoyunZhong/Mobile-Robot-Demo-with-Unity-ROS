@@ -12,16 +12,27 @@ Before running this package, it is highly recommended to try the [Unity Robotics
 
 Clone this project by `git clone --recurse-submodules git@github.com:ZhuoyunZhong/Mobile-Robot-Demo-with-Unity-ROS.git  `
 
-## Unity Setup
+### [Part 1 Unity Setup](part1_unity.md) 
 
-Open Unity Hub and click "Add" button. Select **Mobile Robot Demo** folder. Now you could open the added project Mobile Robot Demo. 
+![image](demo/navigating.gif)
+
+This part includes how to import the mobile robot in Unity scene, and control the mobile robot with your keyboard.
 
 ## ROS Setup
 
-This
+
 
 ## Running Mobile Robot
 
 
 
+## Sensors
+
+
+
 ## TODO List
+
+- Robot State Publisher (Publish tf frames)
+- RGB-D Camera / Pointcloud 
+- More publishers and subscribers to use Unity as control or vision interface
+
