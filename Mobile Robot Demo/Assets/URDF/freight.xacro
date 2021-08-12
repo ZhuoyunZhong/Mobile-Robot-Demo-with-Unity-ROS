@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<robot name="Freight" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Arguments -->
+    <xacro:arg name="robot_name" default="freight" />
+    <xacro:arg name="prefix" default="$(arg robot_name)/" />
+    
+    <!-- Simulate in gazebo -->
+    <xacro:arg name="sim" default="false" />
+
+
+    <!-- Include files -->
+    <xacro:include filename="$(find fetch_description)/urdf/freight.urdf.xacro" />
+
+    <!-- Load urdf -->
+    <!-- base -->
+    <xacro:load_freight_urdf prefix="$(arg prefix)" />
+    
+    <!-- Load gazebo control pulgin -->
+    <xacro:if value="$(arg sim)">
+        <xacro:include filename="$(find fetch_description)/urdf/freight.gazebo.xacro" />
+        <xacro:load_freight_gazebo prefix="$(arg prefix)" />
+        
+        <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <legacyModeNS>true</legacyModeNS>
+            </plugin>
+        </gazebo>
+    </xacro:if>
+
+</robot>
