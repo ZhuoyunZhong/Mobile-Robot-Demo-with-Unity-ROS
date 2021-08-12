@@ -1,12 +1,12 @@
 ## Unity Setup
 
-Open Unity Hub and click "Add" button. Navigate to the repository folder and select **Mobile Robot Demo** folder. Now you could open the added project **Mobile Robot Demo.** 
+This part includes how to import the mobile robot in Unity scene, and control the mobile robot with your keyboard.
 
 ---
 
-In this demo, we are using robot [freight robot base](https://fetchrobotics.com/freight100-oem-base/) as demonstration. 
+Open Unity Hub and click "Add" button. Navigate to the repository folder and select **Mobile Robot Demo** folder. Now you could open the added project **Mobile Robot Demo.** 
 
-To import the robot in Unity
+In this demo, we are using robot [freight robot base](https://fetchrobotics.com/freight100-oem-base/) as demonstration. To import the robot in Unity
 
 - Navigate to `Assets/Scenes` and open scene `Demo`. 
 - Navigate to `Assets/URDF`, right click `freight.urdf` and click **Import Robot from Selected URDF file**, then **Import URDF**. You will see the robot being imported in the scene.
@@ -20,7 +20,7 @@ To ensure proper collision between wheels and the floor, the original mesh colli
 - Navigate to `.../freight/l_wheel_link/Collisions/unnamed/Sphere`, adjust the radius to 0.0605. You should see the collider surrounding the wheel.
 - Repeat the same process for the right wheel.
 
-![image](/home/joeyzhong/catkin_ws/src/Mobile-Robot-Demo-with-Unity-ROS/demo/wheel_collider.jpg)
+![image](demo/wheel_collider.jpg)
 
 ---
 
