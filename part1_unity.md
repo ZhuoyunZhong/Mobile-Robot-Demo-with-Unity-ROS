@@ -1,4 +1,4 @@
-## Unity Setup
+## Part 1: Unity Setup
 
 This part includes how to import the mobile robot in Unity scene, and control the mobile robot with your keyboard.
 
