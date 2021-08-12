@@ -137,7 +137,7 @@
     </collision>
   </link>
   <joint name="freight/laser_joint" type="fixed">
-    <origin rpy="3.14159265359 0 0" xyz="0.235 0 0.2878"/>
+    <origin rpy="0 0 0" xyz="0.235 0 0.2878"/>
     <parent link="freight/chassis_link"/>
     <child link="freight/laser_link"/>
     <axis xyz="0 0 0"/>
