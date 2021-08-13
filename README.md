@@ -12,23 +12,23 @@ Before running this package, it is highly recommended to try the [Unity Robotics
 
 Clone this project by `git clone --recurse-submodules git@github.com:ZhuoyunZhong/Mobile-Robot-Demo-with-Unity-ROS.git  `
 
-### [Part 1 Unity Setup](part1_unity.md) 
+### [Part 1: Unity Setup](part1_unity.md) 
 
 ![image](demo/navigating.gif)
 
 This part includes how to import the mobile robot in Unity scene, and control the mobile robot with your keyboard.
 
-## ROS Setup
+### [Part 2: Sensors](part2_sensors.md) 
 
+![image](demo/laser.gif)
 
+This part includes how to attach common sensors: camera, laser and robot state readers to the robot.
 
-## Running Mobile Robot
+### [Part 3: ROS Setup](part3_ros.md) 
 
+![image](demo/ros.jpg)
 
-
-## Sensors
-
-
+This part includes how to set up the ROS node to communicate with robots in Unity.
 
 ## TODO List
 

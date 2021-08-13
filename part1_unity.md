@@ -37,3 +37,8 @@ Now that we have the colliders properly set up, we will need to initialize and m
 - Finally, we can now run the Unity, and try to control the robot with your keyboard. Also, by now, you will have the same setup as scene **RobotImported**.
 
 ![image](demo/navigating.gif)
+
+---
+
+Proceed to [Part 2: Sensors](part2_sensors.md) 
+
