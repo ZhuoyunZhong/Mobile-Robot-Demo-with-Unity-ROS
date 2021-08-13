@@ -28,7 +28,7 @@ This part includes how to attach common sensors: camera, laser and robot state r
 
 ![image](demo/ros.jpg)
 
-This part includes how to set up the ROS node to communicate with robots in Unity.
+This part includes how to add ROS communication scripts and set up the ROS node to communicate with robots in Unity.
 
 ## TODO List
 
