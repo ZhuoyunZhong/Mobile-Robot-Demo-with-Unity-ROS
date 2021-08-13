@@ -32,7 +32,7 @@ Now that we have the colliders properly set up, we will need to initialize and m
 - The **Articulation Wheel Controller** helps to convert input linear velocity and angular velocity into wheel speed for differential drive robot. Drag and drop the two wheel articulation body objects in the slots, and enter the relative track length and wheel radius. In this case, they are 0.37476 and 0.0605 respectively.
 - After having scripts to initialize and control the joints, we need to send the control signals to the robot. Navigate to `Freight/Plugins`, click **Add Component**, this time, search **keyboard**, then add **Keyboard Control**. In the controller object slot, we need to put in the game object in which the Wheel Controller is saved, in this case, the `Plugin`.
 
-![image](demo/plugin1.jpg)
+![image](demo/controller.jpg)
 
 - Finally, we can now run the Unity, and try to control the robot with your keyboard. Also, by now, you will have the same setup as scene **RobotImported**.
 
