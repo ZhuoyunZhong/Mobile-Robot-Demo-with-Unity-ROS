@@ -37,8 +37,8 @@ public class ArticulationWheelController : MonoBehaviour
         else
         {
             // Convert from linear x and angular z velocity to wheel speed
-            vRight = -targetAngularSpeed*(wheelTrackLength/2) + targetLinearSpeed;
-            vLeft = targetAngularSpeed*(wheelTrackLength/2) + targetLinearSpeed;
+            vRight = targetAngularSpeed*(wheelTrackLength/2) + targetLinearSpeed;
+            vLeft = -targetAngularSpeed*(wheelTrackLength/2) + targetLinearSpeed;
 
             setWheelVelocity(leftWheel, vLeft / wheelRadius * Mathf.Rad2Deg);
             setWheelVelocity(rightWheel, vRight / wheelRadius * Mathf.Rad2Deg);
@@ -48,7 +48,7 @@ public class ArticulationWheelController : MonoBehaviour
     private void setWheelVelocity(ArticulationBody wheel, float jointVelocity)
     {
         ArticulationDrive drive = wheel.xDrive;
-        drive.target = drive.target + jointVelocity*Time.fixedDeltaTime;
+        drive.target = drive.target + jointVelocity * Time.fixedDeltaTime;
         wheel.xDrive = drive;
     }
 

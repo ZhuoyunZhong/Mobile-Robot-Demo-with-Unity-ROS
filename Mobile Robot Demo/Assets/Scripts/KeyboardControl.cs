@@ -25,7 +25,7 @@ public class KeyboardControl : MonoBehaviour
     {
         // Get key input
         targetLinearSpeed = Input.GetAxisRaw("Vertical") * speed;
-        targetAngularSpeed = Input.GetAxisRaw("Horizontal") * angularSpeed;
+        targetAngularSpeed = -Input.GetAxisRaw("Horizontal") * angularSpeed;
     }
 
     void FixedUpdate()
