@@ -8,8 +8,7 @@ using UnityEngine;
 /// </summary>
 public class KeyboardControl : MonoBehaviour
 {
-    public GameObject controllerObject;
-    private ArticulationWheelController wheelController;
+    public ArticulationWheelController wheelController;
 
     public float speed = 1.5f;
     public float angularSpeed = 1.5f;
@@ -18,7 +17,6 @@ public class KeyboardControl : MonoBehaviour
 
     void Start()
     {
-        wheelController = controllerObject.GetComponent<ArticulationWheelController>();
     }
 
     void Update()

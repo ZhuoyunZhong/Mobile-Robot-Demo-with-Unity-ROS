@@ -30,7 +30,7 @@ Now that we have the colliders properly set up, we will need to initialize and m
 - Navigate to `Freight/Plugins`, click **Add Component**, search **Articulation**, then add **Articulation Body Initialization** and **Articulation Wheel Controller**. 
 - The **Articulation Body Initialization** script will initialize all the non-fixed articulation joints by assigning stiffness, damping and force limit. In the **Robot Root** slot, drag and drop `Freight`, the game object root or `freight/base_link`.
 - The **Articulation Wheel Controller** helps to convert input linear velocity and angular velocity into wheel speed for differential drive robot. Drag and drop the two wheel articulation body objects in the slots, and enter the relative track length and wheel radius. In this case, they are 0.37476 and 0.0605 respectively.
-- After having scripts to initialize and control the joints, we need to send the control signals to the robot. Navigate to `Freight/Plugins`, click **Add Component**, this time, search **keyboard**, then add **Keyboard Control**. In the controller object slot, we need to put in the game object in which the Wheel Controller is saved, in this case, the `Plugin`.
+- After having scripts to initialize and control the joints, we need to send the control signals to the robot. Navigate to `Freight/Plugins`, click **Add Component**, this time, search **keyboard**, then add **Keyboard Control**. In the Wheel Controller slot, we need to put in the wheel controller, in this case, the `Freight/Plugins`.
 
 ![image](demo/controller.jpg)
 

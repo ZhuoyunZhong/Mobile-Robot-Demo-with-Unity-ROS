@@ -2674,7 +2674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972d0a14e9b6927a3ac0006e867dcf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerObject: {fileID: 1506882988}
+  wheelController: {fileID: 1506882991}
   speed: 1.5
   angularSpeed: 1.5
 --- !u!114 &1506882991
