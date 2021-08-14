@@ -1,0 +1,35 @@
+<launch>
+    <!-- IP Adress -->
+    <rosparam file="$(find freight_endpoint)/config/params.yaml" command="load"/>
+
+    <!-- Connection -->
+    <node name="server_endpoint" pkg="freight_endpoint" type="server_endpoint.py" 
+        args="--wait" output="screen" respawn="true" />
+    
+    
+    <!-- Publishers and Subscribers -->
+    <!-- transform compressed image to raw image -->
+    <node name="main_cam_republish" type="republish" pkg="image_transport" output="screen" 
+          args="compressed in:=/main_cam/color/image_raw raw out:=/main_cam/color/image_raw" />
+
+
+    <!-- Set the joystick input -->
+    <arg name="joy_config" default="xbox" />
+    <arg name="config_filepath" default="$(find gopher_control)/config/joystick/$(arg joy_config).config.yaml" />
+    <arg name="joystick" default="js0"/>
+    <arg name="robot_name" default="gopher"/>
+    <!-- Base and Main camera control-->
+    <!-- joy node -->
+    <node respawn="true" pkg="joy" type="joy_node" name="teleop_joystick" >
+        <param name="dev" type="string" value="/dev/input/$(arg joystick)" />
+        <param name="deadzone" value="0.12" />
+        <param name="autorepeat_rate" value="20" />
+    </node>
+    <!-- teleoperation node -->
+    <node name="teleop_twist_joy" pkg="gopher_control" type="teleop_twist_joy" output="screen"> 
+        <!-- Axes -->
+        <rosparam command="load" file="$(arg config_filepath)" />
+        <remap from="/pitch_yaw" to="main_cam_controller/pitch_yaw" />
+        <remap from="/cmd_vel" to="base_controller/cmd_vel" />
+    </node>
+</launch>
