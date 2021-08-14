@@ -26,7 +26,7 @@ This part includes how to attach common sensors: camera, laser and robot state r
 
 ### [Part 3: ROS Setup](part3_ros.md) 
 
-![image](demo/ros.jpg)
+![image](demo/laser_rviz.gif)
 
 This part includes how to add ROS communication scripts and set up the ROS node to communicate with robots in Unity.
 
