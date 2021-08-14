@@ -21,8 +21,8 @@ def main():
         
         # Sensors
         # camera
-        "main_cam/color/image_raw/compressed": 
-            RosPublisher("main_cam/color/image_raw/compressed", CompressedImage, queue_size=1),
+        "camera/color/image_raw/compressed": 
+            RosPublisher("camera/color/image_raw/compressed", CompressedImage, queue_size=1),
         # lidar
         "base_scan": 
             RosPublisher("base_scan", LaserScan, queue_size=1),
