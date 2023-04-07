@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Unity.Robotics.Core;
 using Unity.Robotics.ROSTCPConnector;
 using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using RosMessageTypes.Std;
@@ -22,21 +23,21 @@ public class PoseStampedPublisher : MonoBehaviour
 
     // Message
     private PoseStampedMsg poseStamped;
-    private string frameId = "model_pose";
-    public float publishRate;
+    private string frameID = "model_pose";
+    public float publishRate = 10f;
 
     void Start()
     {
         // Get ROS connection static instance
-        ros = ROSConnection.instance;
+        ros = ROSConnection.GetOrCreateInstance();
+        ros.RegisterPublisher<PoseStampedMsg>(poseStampedTopicName);
 
         // Initialize message
         poseStamped = new PoseStampedMsg
         {
-            header = new HeaderMsg()
-            {
-                frame_id = frameId
-            }
+            header = new HeaderMsg(
+                Clock.GetCount(), new TimeStamp(Clock.time), frameID
+            )
         };
 
         InvokeRepeating("PublishPoseStamped", 1f, 1f/publishRate);
@@ -44,11 +45,13 @@ public class PoseStampedPublisher : MonoBehaviour
 
     private void PublishPoseStamped()
     {
-        poseStamped.header.Update();
+        poseStamped.header = new HeaderMsg(
+            Clock.GetCount(), new TimeStamp(Clock.time), frameID
+        );
 
         poseStamped.pose.position = publishedTransform.position.To<FLU>();
         poseStamped.pose.orientation = publishedTransform.rotation.To<FLU>();
 
-        ros.Send(poseStampedTopicName, poseStamped);
+        ros.Publish(poseStampedTopicName, poseStamped);
     }
 }

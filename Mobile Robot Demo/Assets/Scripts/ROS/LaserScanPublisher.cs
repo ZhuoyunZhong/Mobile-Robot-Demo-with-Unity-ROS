@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Unity.Robotics.Core;
 using Unity.Robotics.ROSTCPConnector;
-using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using RosMessageTypes.Sensor;
 using RosMessageTypes.Std;
 
@@ -16,33 +16,35 @@ public class LaserScanPublisher : MonoBehaviour
     private ROSConnection ros;
     // Variables required for ROS communication
     public string laserTopicName = "base_scan";
+    public string laserLinkId = "laser_link";
 
     // Sensor
     public Laser laser;
 
     // Message
     private LaserScanMsg laserScan;
-    private string FrameId = "laser_scan";
-    public float publishRate;
+    public float publishRate = 10f;
 
     void Start()
     {
         // Get ROS connection static instance
-        ros = ROSConnection.instance;
+        ros = ROSConnection.GetOrCreateInstance();
+        ros.RegisterPublisher<LaserScanMsg>(laserTopicName);
 
         // Initialize messages
-        float angle_increment = (laser.angleMax - laser.rangeMin)/(laser.samples-1);
-        float scan_time = 1f / laser.updateRate;
-        float time_increment = 0f;
+        float angleIncrement = (laser.angleMax - laser.angleMin)/(laser.samples-1);
+        float scanTime = 1f / laser.updateRate;
+        float timeIncrement = scanTime / laser.samples;
         float[] intensities = new float[laser.ranges.Length];
         laserScan = new LaserScanMsg
         {
-            header = new HeaderMsg { frame_id = FrameId },
+            header = new HeaderMsg(Clock.GetCount(), 
+                                   new TimeStamp(Clock.time), laserLinkId),
             angle_min       = laser.angleMin,
             angle_max       = laser.angleMax,
-            angle_increment = angle_increment,
-            time_increment  = time_increment,
-            scan_time       = scan_time,
+            angle_increment = angleIncrement,
+            time_increment  = timeIncrement,
+            scan_time       = scanTime,
             range_min       = laser.rangeMin,
             range_max       = laser.rangeMax,
             ranges          = laser.ranges,      
@@ -58,9 +60,11 @@ public class LaserScanPublisher : MonoBehaviour
 
     private void PublishScan()
     {   
-        laserScan.header.Update();
-        laserScan.ranges = laser.GetCurrentScanRanges();
+        laserScan.header = new HeaderMsg(
+            Clock.GetCount(), new TimeStamp(Clock.time), laserLinkId
+        );
+        laserScan.ranges = laser.ranges;
 
-        ros.Send(laserTopicName, laserScan);
+        ros.Publish(laserTopicName, laserScan);
     }
 }

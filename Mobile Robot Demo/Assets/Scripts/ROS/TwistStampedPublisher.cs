@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Unity.Robotics.Core;
 using Unity.Robotics.ROSTCPConnector;
 using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using RosMessageTypes.Std;
@@ -29,14 +30,15 @@ public class TwistStampedPublisher : MonoBehaviour
     // Message
     private TwistStampedMsg twistStamped;
     private string frameId = "model_twist";
-    public float publishRate;
+    public float publishRate = 10f;
     private float deltaTime;
 
 
     void Start()
     {
         // Get ROS connection static instance
-        ros = ROSConnection.instance;
+        ros = ROSConnection.GetOrCreateInstance();
+        ros.RegisterPublisher<TwistStampedMsg>(twistStampedTopicName);
 
         previousPosition = publishedTransform.position;
         previousRotation = publishedTransform.rotation.eulerAngles;
@@ -44,10 +46,9 @@ public class TwistStampedPublisher : MonoBehaviour
         // Initialize message
         twistStamped = new TwistStampedMsg
         {
-            header = new HeaderMsg()
-            {
-                frame_id = frameId
-            }
+            header = new HeaderMsg(
+                Clock.GetCount(), new TimeStamp(Clock.time), frameId
+            )
         };
 
         deltaTime = 1f/publishRate;
@@ -56,7 +57,9 @@ public class TwistStampedPublisher : MonoBehaviour
 
     private void PublishTwistStamped()
     {
-        twistStamped.header.Update();
+        twistStamped.header = new HeaderMsg(
+            Clock.GetCount(), new TimeStamp(Clock.time), frameId
+        );
 
         // Linear
         linearVelocity = (publishedTransform.position - previousPosition)
@@ -76,6 +79,6 @@ public class TwistStampedPublisher : MonoBehaviour
         twistStamped.twist.linear = linearVelocity.To<FLU>();
         twistStamped.twist.angular = angularVelocity.To<FLU>();
         
-        ros.Send(twistStampedTopicName, twistStamped);
+        ros.Publish(twistStampedTopicName, twistStamped);
     }
 }

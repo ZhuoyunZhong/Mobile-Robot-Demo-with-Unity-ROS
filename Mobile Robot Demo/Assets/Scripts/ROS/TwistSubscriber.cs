@@ -26,22 +26,18 @@ public class TwistSubscriber : MonoBehaviour
     void Start()
     {
         // Get ROS connection static instance
-        ros = ROSConnection.instance;
+        ros = ROSConnection.GetOrCreateInstance();
 
         targetLinearVelocity = 0f;
         targetAngularVelocity = 0f;
         
-        ros.Subscribe<TwistMsg>(twistTopicName, updateVelocity);
+        ros.Subscribe<TwistMsg>(twistTopicName, UpdateVelocity);
     }
 
-    private void FixedUpdate()
-    {
-        wheelController.setRobotVelocity(targetLinearVelocity, targetAngularVelocity);
-    }
-
-    private void updateVelocity(TwistMsg twist)
+    private void UpdateVelocity(TwistMsg twist)
     {
         targetLinearVelocity = twist.linear.From<FLU>().z * linearSpeed;
         targetAngularVelocity = twist.angular.From<FLU>().y * angularSpeed;
+        wheelController.SetRobotVelocity(targetLinearVelocity, targetAngularVelocity);
     }
 }

@@ -2,6 +2,9 @@ using System;
 using RosMessageTypes.Std;
 using RosMessageTypes.BuiltinInterfaces;
 
+/// <summary>
+///     A timer for extended header class 
+/// </summary>
 public class Timer
 {
     public static DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);

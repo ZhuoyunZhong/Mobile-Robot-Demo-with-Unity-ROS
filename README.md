@@ -4,7 +4,7 @@
 
 ## Dependencies
 
-This repository has been developed and tested in **Ubuntu 18.04 and ROS Melodic**, with **Unity 20.3.12f1 LTS**.
+This repository has been developed and tested in **Ubuntu 18.04 and ROS Melodic**, with **Unity 20.3 LTS**.
 
 Before running this package, it is highly recommended to try the [Unity Robotics Hub](https://github.com/Unity-Technologies/Unity-Robotics-Hub) pick&place demo first. It shows the steps to import robot, convert messages, and communicate with ROS in details. But you could still run this package by following the steps below.
 
@@ -32,7 +32,7 @@ This part includes how to add ROS communication scripts and set up the ROS node 
 
 ## TODO List
 
-- Robot State Publisher (Publish tf frames)
-- RGB-D Camera / Pointcloud 
-- More publishers and subscribers to use Unity as control or vision interface
+- RGB-D Camera / Pointcloud
+
+## Mobile manipulator robot and more
 

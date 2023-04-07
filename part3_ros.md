@@ -25,7 +25,7 @@ On the Unity side
 
 To send and receive messages from ROS, we will still need some subscribers and publishers scripts to send and receive messages. Some of the codes are originated from [ros-sharp](https://github.com/siemens/ros-sharp) and are modified to work with the new ROS-Unity framework. 
 
-Let's create a new empty game object called **ROS** under `Freight` to store ROS-related scripts, or you could also add the scripts to `Freight/Plugins`as the previous ones. 
+Let's create a new empty game object called **ROS** under `Freight` to store ROS-related scripts, or you could also add the scripts to `Freight/Plugins` as the previous ones. 
 
 - Now in `Freight/ROS`, **Add Component**, and search **Subscriber** and add **Twist Subscriber**. This script subscribes the twist message from the ROS side and send the control signal to the wheel controller to move the robot. Now drag and drop the `Freight/Plugins` into Wheel Controller slot, and set the maximum linear and angular speed. As we are using control command from ROS side now, don't forget to disable the **Keyboard Control** in `Freight/Plugins`.
 
@@ -33,7 +33,7 @@ Let's create a new empty game object called **ROS** under `Freight` to store ROS
 
 ![image](demo/cmd_vel.gif)
 
-- In terms of publishers, in `Freight/ROS`, **Add Component**, search **Publisher** and add publishers: **Image Publisher**, **Laser Scan Publisher**, **Joint State Publisher**, **Pose Stamped Publisher** and **Twist Stamped Publisher**, based on your need. Don't forget to drag and drop proper game objects and setting publish rate after adding scripts.
+- In terms of publishers, in `Freight/ROS`, **Add Component**, search **Publisher** and add publishers: **ROS Clock Publisher**, **ROS Transform Tree Publisher**, **Image Publisher**, **Laser Scan Publisher**, **Joint State Publisher**, **Pose Stamped Publisher** and **Twist Stamped Publisher**, based on your need. Don't forget to drag and drop proper game objects and setting publish rate after adding scripts.
 
 ![image](demo/pub_sub.jpg)
 
@@ -44,7 +44,7 @@ Let's create a new empty game object called **ROS** under `Freight` to store ROS
   There are a few known issues with the camera publisher
   
   - This render mode does NOT support linear color space.
-  - The renderer and encoder will slow down the frame rate dramatically.
+  - The renderer and encoder will slow down the frame rate dramatically. Disable it if you are not using it.
   
 - You can view the laser scan with Rviz. Add a laser scan, select the `base_scan` topic and change the global fixed frame to `laser_scan`.
 

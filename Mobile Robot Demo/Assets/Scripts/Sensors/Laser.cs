@@ -27,19 +27,17 @@ public class Laser : MonoBehaviour
     void Start()
     {
         // Calculate resolution based on angle limit and number of samples
-        angleIncrement = (angleMax - angleMin)/(samples-1);
+        angleIncrement = (angleMax - angleMin) / (samples-1);
 
         ranges = new float[samples];
         raycastHits = new RaycastHit[samples];
 
-        scanTime = 1f/updateRate;
+        scanTime = 1f / updateRate;
         if (alwaysOn)
             InvokeRepeating("Scan", 1f, scanTime);
     }
 
-    void Update()
-    {
-    }
+    void Update() {}
 
     private void Scan()
     {
@@ -49,23 +47,34 @@ public class Laser : MonoBehaviour
         for (int i = 0; i < samples; i++)
         {
             Vector3 rotation = GetRayRotation(i) * laserLink.transform.forward;
+
             // Check if hit colliders within distance
-            if (Physics.Raycast(laserLink.transform.position, rotation, 
-                                out raycastHits[i], rangeMax) && 
-               (raycastHits[i].distance >= rangeMin))
+            if ((Physics.Raycast(
+                    laserLink.transform.position, 
+                    rotation, 
+                    out raycastHits[i], 
+                    rangeMax)
+                )
+                && (raycastHits[i].distance >= rangeMin))
             {
                 ranges[i] = raycastHits[i].distance;
 
                 // Debug
                 if (visualization)
-                    Debug.DrawRay(laserLink.transform.position, 
-                                  ranges[i] * rotation, 
-                                  Color.red, scanTime);
+                {
+                    Debug.DrawRay(
+                        laserLink.transform.position, 
+                        ranges[i] * rotation, 
+                        Color.red, 
+                        scanTime
+                    );
+                }
             }
         }
     }
 
-    private Quaternion GetRayRotation(int sampleInd) {
+    private Quaternion GetRayRotation(int sampleInd) 
+    {
         float angle = (angleMin + (angleIncrement * sampleInd)) * Mathf.Rad2Deg;
         return Quaternion.AngleAxis(angle, laserLink.transform.up);
     }

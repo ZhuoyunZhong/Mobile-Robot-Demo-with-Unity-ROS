@@ -15,9 +15,7 @@ public class KeyboardControl : MonoBehaviour
     private float targetLinearSpeed;
     private float targetAngularSpeed;
 
-    void Start()
-    {
-    }
+    void Start() {}
 
     void Update()
     {
@@ -28,6 +26,6 @@ public class KeyboardControl : MonoBehaviour
 
     void FixedUpdate()
     {
-        wheelController.setRobotVelocity(targetLinearSpeed, targetAngularSpeed);
+        wheelController.SetRobotVelocity(targetLinearSpeed, targetAngularSpeed);
     }
 }
