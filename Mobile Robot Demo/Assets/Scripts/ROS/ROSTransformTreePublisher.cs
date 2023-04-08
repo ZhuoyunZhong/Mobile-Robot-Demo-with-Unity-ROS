@@ -103,7 +103,8 @@ public class ROSTransformTreePublisher : MonoBehaviour
                 new HeaderMsg(Clock.GetCount(), new TimeStamp(Clock.time), globalFrameIds[i - 1]),
                 globalFrameIds[i],
                 // Initializes to identity transform
-                new TransformMsg());
+                new TransformMsg()
+            );
             tfMessageList.Add(tfGlobalToGlobal);
         }
 

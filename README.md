@@ -32,6 +32,7 @@ This part includes how to add ROS communication scripts and set up the ROS node 
 
 ## TODO List
 
+- Tutorial for mapping, localization, and navigation.
 - RGB-D Camera / Pointcloud
 
 ## Mobile manipulator robot and more

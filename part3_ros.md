@@ -8,11 +8,9 @@ To communicate between Unity and ROS, we need to define subscribers and publishe
 
 On the ROS side
 
-- Copy all the folders under **ROS** folder of this repository, and paste them to your catkin workspace. Build your catkin workspace again with `catkin_make`.
+- Copy all the folders under **ROS** folder of this repository, and paste them to your catkin workspace. Build your catkin workspace again with `catkin_make`. Please note that if you don't find any files under **ROS-TCP-Endpoint** or **teleop_twist_joy**, you didn't correctly clone the repository. Remember to clone it with `--recurse-submodules`.
 
-- All the topics used in this section, including camera, laser scan, control signal, etc, are defined in `server_endpoint.py`. For more details, please refer to  [Pick & Place demo](https://github.com/Unity-Technologies/Unity-Robotics-Hub/tree/main/tutorials/pick_and_place).
-
-- You need to change the IP in `params.yaml` of the **config** folder to that of your machine. You can get the IP of your machine by  `hostname -I`.
+- You don't necessarily need to change the IP adress in launch file, but you have to do that if you are using ports other than 10000.
 
 - Now you could launch ROS node by 
 
@@ -20,8 +18,8 @@ On the ROS side
 
 On the Unity side
 
-- click **Robotics** in the menu bar and click **ROS Settings**. Change the IP Address to your IP. This will generate a **ROSConnectionPrefab** in `Assets/Resources`, drag it to the Scene hierarchy.
-- With the nodes launched, run Unity and you should be able to see they are connected successfully.
+- click **Robotics** in the menu bar and click **ROS Settings**. Change the IP Address to your IP. You can get the IP of your machine by  `hostname -I`. This will generate a **ROSConnectionPrefab** in `Assets/Resources`, drag it to the Scene hierarchy.
+- With the nodes launched, run Unity, hit connect in the hub, and you should be able to see they are connected successfully.
 
 To send and receive messages from ROS, we will still need some subscribers and publishers scripts to send and receive messages. Some of the codes are originated from [ros-sharp](https://github.com/siemens/ros-sharp) and are modified to work with the new ROS-Unity framework. 
 
@@ -29,11 +27,11 @@ Let's create a new empty game object called **ROS** under `Freight` to store ROS
 
 - Now in `Freight/ROS`, **Add Component**, and search **Subscriber** and add **Twist Subscriber**. This script subscribes the twist message from the ROS side and send the control signal to the wheel controller to move the robot. Now drag and drop the `Freight/Plugins` into Wheel Controller slot, and set the maximum linear and angular speed. As we are using control command from ROS side now, don't forget to disable the **Keyboard Control** in `Freight/Plugins`.
 
-  Run the Unity simulation and launch the ROS node, send commands to topic `base_controller/cmd_vel` with packages like `teleop_twist_joy`. The robot should be able to follow your command.
+  Run the Unity simulation and launch the ROS node, send commands to topic `cmd_vel` with packages like `teleop_twist_joy`. The robot should be able to follow your command.
 
 ![image](demo/cmd_vel.gif)
 
-- In terms of publishers, in `Freight/ROS`, **Add Component**, search **Publisher** and add publishers: **ROS Clock Publisher**, **ROS Transform Tree Publisher**, **Image Publisher**, **Laser Scan Publisher**, **Joint State Publisher**, **Pose Stamped Publisher** and **Twist Stamped Publisher**, based on your need. Don't forget to drag and drop proper game objects and setting publish rate after adding scripts.
+- In terms of publishers, in `Freight/ROS`, **Add Component**, search **Publisher** and add publishers: **ROS Clock Publisher**, **ROS Transform Tree Publisher**, **Image Publisher**, **Laser Scan Publisher**, **Joint State Publisher**, **Pose Stamped Publisher** and **Twist Stamped Publisher**, based on your need. Don't forget to drag and drop proper game objects and parameters (e.g. publish rate) after adding scripts.
 
 ![image](demo/pub_sub.jpg)
 
@@ -46,7 +44,7 @@ Let's create a new empty game object called **ROS** under `Freight` to store ROS
   - This render mode does NOT support linear color space.
   - The renderer and encoder will slow down the frame rate dramatically. Disable it if you are not using it.
   
-- You can view the laser scan with Rviz. Add a laser scan, select the `base_scan` topic and change the global fixed frame to `laser_scan`.
+- You can view the laser scan with Rviz. Add a laser scan, select the `base_scan` topic and change the global fixed frame to `freight/base_link`.
 
 ![image](demo/laser_rviz.gif)
 

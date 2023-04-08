@@ -64,8 +64,9 @@ public class JointStatePublisher : MonoBehaviour
         
         jointState = new JointStateMsg
         {
-            header = new HeaderMsg(Clock.GetCount(), 
-                                   new TimeStamp(Clock.time), frameId),
+            header = new HeaderMsg(
+                Clock.GetCount(), new TimeStamp(Clock.time), frameId
+            ),
             name = names,
             position = new double[jointStateLength],
             velocity = new double[jointStateLength],

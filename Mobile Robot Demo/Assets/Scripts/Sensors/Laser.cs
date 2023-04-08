@@ -8,75 +8,77 @@ using UnityEngine;
 /// </summary>
 public class Laser : MonoBehaviour
 {
+    // general
     public GameObject laserLink;
-    public bool alwaysOn = true;
-    public bool visualization = false;
-
+    private Vector3 rayStartPosition;
+    private Vector3 rayStartForward;
+    public bool debugVisualization = false;
+    // scan params
+    public int updateRate = 10;
+    private float scanTime;
     public int samples = 180;
     public float angleMin = -1.5708f;
     public float angleMax = 1.5708f;
     private float angleIncrement;
-    public int updateRate = 10;
-    private float scanTime;
     public float rangeMin = 0.1f;
     public float rangeMax = 5.0f;
-
+    // containers
     private RaycastHit[] raycastHits;
+    private Quaternion[] rayRotations;
+    public float[] directions;
     public float[] ranges;
 
-    void Start()
+    private void Start()
     {
-        // Calculate resolution based on angle limit and number of samples
-        angleIncrement = (angleMax - angleMin) / (samples-1);
-
+        // Containers
+        rayRotations = new Quaternion[samples];
+        directions = new float[samples];
         ranges = new float[samples];
-        raycastHits = new RaycastHit[samples];
 
+        // Calculate resolution based on angle limit and number of samples
+        angleIncrement = (angleMax - angleMin) / (samples - 1);
+        for (int i = 0; i < samples; ++i)
+        {
+            directions[i] = angleMin + i * angleIncrement;
+            rayRotations[i] = Quaternion.Euler(
+                new Vector3(0f, directions[i] * Mathf.Rad2Deg, 0f)
+            );
+        }
+
+        // Start scanning
         scanTime = 1f / updateRate;
-        if (alwaysOn)
-            InvokeRepeating("Scan", 1f, scanTime);
+        InvokeRepeating("Scan", 1f, scanTime);
     }
-
-    void Update() {}
 
     private void Scan()
     {
         ranges = new float[samples];
 
         // Cast rays towards diffent directions to find colliders
-        for (int i = 0; i < samples; i++)
+        rayStartPosition = laserLink.transform.position;
+        rayStartForward = laserLink.transform.forward;
+        for (int i = 0; i < samples; ++i)
         {
-            Vector3 rotation = GetRayRotation(i) * laserLink.transform.forward;
+            // Ray angle
+            Vector3 rotation = rayRotations[i] * rayStartForward;
 
             // Check if hit colliders within distance
-            if ((Physics.Raycast(
-                    laserLink.transform.position, 
-                    rotation, 
-                    out raycastHits[i], 
-                    rangeMax)
-                )
-                && (raycastHits[i].distance >= rangeMin))
+            raycastHits = new RaycastHit[samples];
+            if (Physics.Raycast(rayStartPosition, rotation, out raycastHits[i], rangeMax) 
+                && (raycastHits[i].distance >= rangeMin)
+                && (!raycastHits[i].collider.isTrigger))
             {
                 ranges[i] = raycastHits[i].distance;
 
-                // Debug
-                if (visualization)
+                // Visualization
+                if (debugVisualization)
                 {
                     Debug.DrawRay(
-                        laserLink.transform.position, 
-                        ranges[i] * rotation, 
-                        Color.red, 
-                        scanTime
+                        rayStartPosition, ranges[i] * rotation, Color.red, scanTime
                     );
                 }
             }
         }
-    }
-
-    private Quaternion GetRayRotation(int sampleInd) 
-    {
-        float angle = (angleMin + (angleIncrement * sampleInd)) * Mathf.Rad2Deg;
-        return Quaternion.AngleAxis(angle, laserLink.transform.up);
     }
 
     public float[] GetCurrentScanRanges() 
