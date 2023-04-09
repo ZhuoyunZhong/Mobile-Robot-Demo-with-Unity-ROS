@@ -18,24 +18,28 @@ public class TwistSubscriber : MonoBehaviour
     public string twistTopicName = "cmd_vel";
 
     public ArticulationWheelController wheelController;
-    private float targetLinearVelocity;
-    private float targetAngularVelocity;
+    private float targetLinearSpeed;
+    private float targetAngularSpeed;
     
     void Start()
     {
         // Get ROS connection static instance
         ros = ROSConnection.GetOrCreateInstance();
 
-        targetLinearVelocity = 0f;
-        targetAngularVelocity = 0f;
+        targetLinearSpeed = 0f;
+        targetAngularSpeed = 0f;
         
         ros.Subscribe<TwistMsg>(twistTopicName, UpdateVelocity);
+    }
+    
+    void FixedUpdate()
+    {
+        wheelController.SetRobotVelocity(targetLinearSpeed, targetAngularSpeed);
     }
 
     private void UpdateVelocity(TwistMsg twist)
     {
-        targetLinearVelocity = twist.linear.From<FLU>().z;
-        targetAngularVelocity = twist.angular.From<FLU>().y;
-        wheelController.SetRobotVelocity(targetLinearVelocity, targetAngularVelocity);
+        targetLinearSpeed = twist.linear.From<FLU>().z;
+        targetAngularSpeed = twist.angular.From<FLU>().y;
     }
 }

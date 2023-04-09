@@ -27,7 +27,7 @@ public class ROSTransformTreePublisher : MonoBehaviour
     private TransformTreeNode transformRoot;
 
     // Message
-    public float publishRate = 20f;
+    public float publishRate = 30f;
 
     double lastPublishTimeSeconds;
     double publishPeriodSeconds => 1.0f / publishRate;
