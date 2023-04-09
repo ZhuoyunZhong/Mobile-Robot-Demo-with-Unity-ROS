@@ -38,7 +38,7 @@ This part includes how to make use of ROS packages to achive mapping the environ
 
 # Mobile manipulator robot and more
 
-This repository serves as a basic tutorial of setting up mobile robot in Unity simulation. If you are intested in more about ROS-Unity robot simulation. Please feel free to try our repository Gopher In Unity Simulation.
+This repository serves as a basic tutorial of setting up mobile robot in Unity simulation. If you are intested in more about ROS-Unity robot simulation. Please feel free to try our repository [Gopher In Unity Simulation](https://github.com/hiro-wpi/Gopher-In-Unity-Simulation).
 
 ## TODO List
 
