@@ -1,0 +1,46 @@
+<launch>
+  
+    <param name="use_sim_time" value="true"/>
+
+    <arg name="robot_name" default="freight"/>
+    <arg name="prefix" default="$(arg robot_name)/"/>
+
+    <arg name="cmd_vel" default="cmd_vel"/>
+    <arg name="scan" default="$(arg prefix)base_scan"/>
+    <arg name="odom_frame" default="$(arg prefix)odom"/>
+    <arg name="base_frame" default="$(arg prefix)chassis_link"/>
+    <arg name="laser_frame" default="$(arg prefix)laser_link"/>
+    <arg name="map_name" default="map"/>
+
+    <!-- Map loader -->
+    <node name="map_server" pkg="map_server" type="map_server" 
+          args="$(find freight_navigation)/maps/$(arg map_name).yaml">
+    </node>
+
+    <!-- AMCL Node -->
+    <node name="amcl" pkg="amcl" type="amcl" output="screen">
+        <!-- Filter -->
+        <param name="min_particles" value="20"/>
+        <param name="max_particles" value="200"/>
+        <param name="update_min_a" value="0.1"/>
+        <param name="update_min_d" value="0.25"/>
+        <!-- Laser -->
+        <remap from="scan" to="$(arg scan)"/>
+        <!-- Odometry -->
+        <param name="odom_frame_id" value="$(arg odom_frame)"/>
+        <param name="odom_model_type" value="diff-corrected"/>
+        <param name="base_frame_id" value="$(arg base_frame)"/>
+        <param name="global_frame_id" value="/map"/>
+    </node>
+
+    <!-- Move Base -->
+    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
+        <remap from="cmd_vel" to="$(arg cmd_vel)"/>
+        
+        <rosparam file="$(find freight_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" subst_value="true"/>
+        <rosparam file="$(find freight_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" subst_value="true"/>
+        <rosparam file="$(find freight_navigation)/config/local_costmap_params.yaml" command="load" subst_value="true"/>
+        <rosparam file="$(find freight_navigation)/config/global_costmap_params.yaml" command="load" subst_value="true"/>
+        <rosparam file="$(find freight_navigation)/config/base_local_planner_params.yaml" command="load"/>
+    </node>
+</launch>

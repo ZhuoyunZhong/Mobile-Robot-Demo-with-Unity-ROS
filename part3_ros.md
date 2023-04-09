@@ -54,7 +54,4 @@ By now, you finish setting up a mobile robot demo, and you should have the same 
 
 ---
 
-Back to [Part 1: Unity Setup](part1_unity.md) 
-
-Back to [Part 2: Sensors](part2_sensors.md) 
-
+Proceed to [Part 4: ROS Navigation](part3_ros_nav.md) 

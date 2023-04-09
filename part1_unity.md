@@ -41,4 +41,3 @@ Now that we have the colliders properly set up, we will need to initialize and m
 ---
 
 Proceed to [Part 2: Sensors](part2_sensors.md) 
-
