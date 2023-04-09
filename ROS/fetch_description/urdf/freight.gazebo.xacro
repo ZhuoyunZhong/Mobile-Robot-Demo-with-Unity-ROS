@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<robot name="freight" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="load_freight_gazebo" params="prefix">
+
+      <!-- Base is modeled as a big tub sitting on floor, with two wheels -->
+      <gazebo reference="${prefix}chassis_link">
+        <kp>10000000.0</kp>
+        <kd>1.0</kd>
+        <mu1>0.01</mu1>
+        <mu2>0.01</mu2>
+      </gazebo>
+      <gazebo reference="${prefix}r_wheel_link">
+        <kp>10000000.0</kp>
+        <kd>1.0</kd>
+        <mu1>0.8</mu1>
+        <mu2>0.8</mu2>
+        <material>Gazebo/Black</material>
+      </gazebo>
+      <gazebo reference="${prefix}l_wheel_link">
+        <kp>10000000.0</kp>
+        <kd>1.0</kd>
+        <mu1>0.8</mu1>
+        <mu2>0.8</mu2>
+        <material>Gazebo/Black</material>
+      </gazebo>
+      <gazebo reference="${prefix}l_wheel_joint">
+        <implicitSpringDamper>1</implicitSpringDamper>
+      </gazebo>
+      <gazebo reference="${prefix}r_wheel_joint">
+        <implicitSpringDamper>1</implicitSpringDamper>
+      </gazebo>
+
+      <!-- SICK TIM561 (25m Range) -->
+      <gazebo reference="${prefix}laser_link">
+      <!-- <gazebo reference="laser_link">   <! TEMPORARY FIX -->
+        <sensor type="ray" name="base_laser">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>false</visualize>
+          <update_rate>15</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>662</samples>
+                <resolution>1</resolution>
+                <min_angle>-1.91986</min_angle>
+                <max_angle>1.91986</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.05</min>
+              <max>25.0</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <!-- Noise parameters based on spec for SICK TIM561 (10m version) -->
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.02</stddev>
+            </noise>
+          </ray>
+          <plugin name="gazebo_ros_base_hokuyo_controller" filename="libgazebo_ros_laser.so">
+            <topicName>base_scan</topicName>
+            <frameName>laser_link</frameName>
+          </plugin>
+        </sensor>
+      </gazebo>
+
+      <!-- Color the estop -->
+      <gazebo reference="${prefix}estop_link">
+        <material>Gazebo/Red</material>
+      </gazebo>
+
+      <!-- Transmission -->
+      <transmission name="${prefix}r_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}r_wheel_joint">
+          <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}r_wheel_actuator">
+          <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${prefix}l_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}l_wheel_joint">
+          <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}l_wheel_actuator">
+          <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+  </xacro:macro>
+</robot>
