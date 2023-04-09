@@ -6,6 +6,9 @@ using Unity.Robotics.Core;
 using Unity.Robotics.UrdfImporter;
 using RosMessageTypes.Geometry;
 
+/// <summary>
+///     This script provides a tf node class.
+/// </summary>
 class TransformTreeNode
 {
     public readonly GameObject SceneObject;
